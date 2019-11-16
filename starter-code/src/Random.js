@@ -1,36 +1,33 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from 'react'
+import axios from 'axios'
 
-class Random extends Component {
+export default class Random extends Component {
 
-    state ={
-        randomBeer:{}
-    } 
-
-    componentDidMount() {
-        axios.get('https://dog.ceo/api/breeds/image/random')
-            .then(randomBeer=>{
-                console.log(randomBeer)
-                this.setState({
-                    randomBeer:randomBeer.data
-                })
-            })
+    state = {
+        randomBeer: {}
     }
 
 
+    componentDidMount() {
+        axios.get('http://ih-beers-api2.herokuapp.com/beers/random').then(randomBeer => {
+            return this.setState({
+                randomBeer: randomBeer.data
+            })
+        })
+    }
     render() {
         console.log(this)
         return (
             <div>
-                
-                Random
+
                 {this.state.randomBeer.name}
-                {this.props.match.params.beerId}
-                <img src={this.state.randomBeer.message} />
-                {this.state.randomBeer.name}
+                <br />
+                <img src={this.state.randomBeer.image_url} width='100px' alt='text' />
+                <br />
+                <p>{this.state.randomBeer.description}</p>
+
+
             </div>
-        );
+        )
     }
 }
-
-export default Random;

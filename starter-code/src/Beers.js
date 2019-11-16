@@ -1,46 +1,49 @@
-import React, { Component } from 'react';
-import axios from 'axios'
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react'
+import Axios from 'axios'
+import { Switch, Link, Route } from 'react-router-dom'
+
 
 class Beers extends Component {
 
-    state= {
-        allTheBeers:[]
+    state = {
+        allTheBeers: []
     }
 
     componentDidMount() {
         this.getAllBeers()
+
     }
+
     getAllBeers = () => {
-        axios.get('https://ih-beers-api2.herokuapp.com/beers').then(allTheBeers=>{
-          console.log(allTheBeers)
-          this.setState({
-            allTheBeers:allTheBeers.data
-          })
+        Axios.get('http://ih-beers-api2.herokuapp.com/beers').then(allTheBeers => {
+            console.log(allTheBeers)
+            this.setState({
+                allTheBeers: allTheBeers.data
+            })
         })
     }
+
     showTheBeers = () => {
         return this.state.allTheBeers.map(eachBeer => {
             return (
+                <li>
                     <Link to={`/beer-detail/${eachBeer._id}`}>
-                    <li>
-                    <h4>{eachBeer.name}</h4>
-                    <img src={eachBeer.image_url} width="200px"/>
-                    <p>{eachBeer.description}</p>
-                    </li>
+                        <h4>{eachBeer.name}</h4>
+                        <img src={eachBeer.image_url} width='50px' alt='beer' />
+                        <p>{eachBeer.description}</p>
                     </Link>
-                    )
+                </li>)
         })
     }
+
 
     render() {
         return (
             <div>
-                Beers
                 {this.showTheBeers()}
             </div>
-        );
+        )
     }
 }
+export default Beers
 
-export default Beers;

@@ -1,31 +1,47 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import axios from 'axios'
 
-class BeerDetail extends Component {
+export default class BeerDetail extends Component {
 
-    state={
-        specificBeer: {}
+
+    state = {
+        beerDetail: {}
     }
+
+
 
     componentDidMount() {
-        //https://ih-beers-api2.herokuapp.com/beers/5daf440ccbc5d2fd7d19ebe6
-        axios.get(`https://ih-beers-api2.herokuapp.com/beers/${this.props.match.params.beerId}`)
-            .then(specificBeer => {
-                this.setState({
-                    specificBeer:specificBeer.data
-                })
+
+        axios.get(`http://ih-beers-api2.herokuapp.com/beers/${this.props.match.params.beerId}
+        `).then(beerDetail => {
+            this.setState({
+                beerDetail: beerDetail.data
             })
+        })
     }
+
+
+
+
+
     render() {
+        console.log(this)
         return (
             <div>
-                Details
-                {this.props.match.params.beerId}
-                <img src={this.state.specificBeer.image_url} />
-                {this.state.specificBeer.name}
+
+                {this.state.beerDetail.name}
+                <br/>
+                <br />
+
+                <img src={this.state.beerDetail.image_url} width='100px' alt='beer' />
+                <br />
+                <br />
+                <p>{this.state.beerDetail.description}</p>
+
+
             </div>
-        );
+
+
+        )
     }
 }
-
-export default BeerDetail;
